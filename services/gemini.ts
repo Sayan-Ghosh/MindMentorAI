@@ -5,8 +5,8 @@ import { JournalAnalysisResult, WeeklyReportResult } from '@/types';
 /** Gemini client — initialized lazily with the server-side API key. */
 const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 
-/** Model used for all AI reasoning tasks. Pro is chosen for nuanced emotional analysis. */
-const MODEL_NAME = 'gemini-2.5-pro';
+/** Model used for all AI reasoning tasks. Flash offers generous free-tier limits with strong reasoning. */
+const MODEL_NAME = 'gemini-2.5-flash';
 
 /** Lower temperature for deterministic, consistent JSON output. */
 const ANALYSIS_TEMPERATURE = 0.2;
