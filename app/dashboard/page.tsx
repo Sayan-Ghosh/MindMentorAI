@@ -7,6 +7,7 @@ import { PatternCards } from "@/components/PatternCards";
 import { WellnessCoach } from "@/components/WellnessCoach";
 import { WellnessReport } from "@/components/WellnessReport";
 import { CrisisAlert } from "@/components/CrisisAlert";
+import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { JournalAnalysisResult, ReportApiResponse } from "@/types";
 
 export default function DashboardPage() {
@@ -49,6 +50,7 @@ export default function DashboardPage() {
   }, [fetchPatterns]);
 
   return (
+    <ErrorBoundary>
     <div className="min-h-screen bg-[#0f172a] text-white p-6 md:p-12 font-sans selection:bg-indigo-500/30">
       <div className="max-w-6xl mx-auto space-y-8">
         
@@ -86,7 +88,7 @@ export default function DashboardPage() {
               </div>
             )}
 
-            {reportData && reportData.chartData.length > 0 && (
+            {reportData && reportData.chartData && reportData.chartData.length > 0 && (
               <WellnessReport 
                 report={reportData.report} 
                 stats={reportData.stats} 
@@ -104,5 +106,6 @@ export default function DashboardPage() {
         </div>
       </div>
     </div>
+    </ErrorBoundary>
   );
 }

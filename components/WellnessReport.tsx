@@ -11,7 +11,7 @@ interface WellnessReportProps {
 }
 
 export function WellnessReport({ report, stats, chartData }: WellnessReportProps) {
-  if (chartData.length === 0) return null;
+  if (!chartData || chartData.length === 0) return null;
 
   return (
     <Card className="bg-white/5 border-white/10 text-white backdrop-blur-sm mt-6">
@@ -61,7 +61,7 @@ export function WellnessReport({ report, stats, chartData }: WellnessReportProps
               <h4 className="text-sm font-semibold text-indigo-300 mb-2">AI Summary</h4>
               <p className="text-sm text-gray-300 leading-relaxed">{report.summary}</p>
             </div>
-            {report.wins.length > 0 && (
+            {report.wins && report.wins.length > 0 && (
               <div>
                 <h4 className="text-sm font-semibold text-green-300 mb-2">This Week's Wins</h4>
                 <ul className="list-disc pl-5 text-sm text-gray-300 space-y-1">
@@ -71,7 +71,7 @@ export function WellnessReport({ report, stats, chartData }: WellnessReportProps
                 </ul>
               </div>
             )}
-            {report.challenges.length > 0 && (
+            {report.challenges && report.challenges.length > 0 && (
               <div>
                 <h4 className="text-sm font-semibold text-amber-300 mb-2">Challenges to Address</h4>
                 <ul className="list-disc pl-5 text-sm text-gray-300 space-y-1">
@@ -81,7 +81,7 @@ export function WellnessReport({ report, stats, chartData }: WellnessReportProps
                 </ul>
               </div>
             )}
-            {report.actionableGoals.length > 0 && (
+            {report.actionableGoals && report.actionableGoals.length > 0 && (
               <div>
                 <h4 className="text-sm font-semibold text-teal-300 mb-2">Actionable Goals for Next Week</h4>
                 <ul className="list-disc pl-5 text-sm text-gray-300 space-y-1">
