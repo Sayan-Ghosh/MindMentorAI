@@ -11,7 +11,7 @@ export const PatternCards = memo(function PatternCards({ patterns }: PatternCard
   if (!patterns || patterns.length === 0) return null;
 
   return (
-    <Card className="bg-white/5 border-white/10 text-white backdrop-blur-sm mt-6">
+    <Card className="bg-white/5 border-white/10 text-white backdrop-blur-sm">
       <CardHeader>
         <CardTitle className="flex items-center text-lg">
           <Lightbulb className="mr-2 h-5 w-5 text-amber-400" />

@@ -16,7 +16,7 @@ export const WellnessReport = memo(function WellnessReport({ report, stats, char
   if (!chartData || chartData.length === 0) return null;
 
   return (
-    <Card className="bg-white/5 border-white/10 text-white backdrop-blur-sm mt-6">
+    <Card className="bg-white/5 border-white/10 text-white backdrop-blur-sm">
       <CardHeader>
         <CardTitle className="text-xl">Weekly Wellness Report</CardTitle>
         <CardDescription className="text-gray-400">
