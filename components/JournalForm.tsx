@@ -37,14 +37,16 @@ export function JournalForm({ onAnalysisComplete }: JournalFormProps) {
       });
 
       if (!response.ok) {
-        throw new Error('Failed to analyze journal');
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.error || 'Failed to analyze journal');
       }
 
       const data = await response.json();
       onAnalysisComplete(data as JournalAnalysisResult);
       reset();
     } catch (err) {
-      setError("An error occurred while processing your journal. Please try again.");
+      const message = err instanceof Error ? err.message : 'Unknown error';
+      setError(message);
     } finally {
       setIsLoading(false);
     }
