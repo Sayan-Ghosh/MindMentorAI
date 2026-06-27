@@ -1,0 +1,40 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model Journal {
+  id                      String   @id @default(cuid())
+  createdAt               DateTime @default(now())
+  content                 String
+  
+  // Base Scores
+  primaryEmotion          String
+  secondaryEmotion        String?
+  stressScore             Int
+  confidenceScore         Int
+  motivationScore         Int
+  burnoutRisk             String
+  isCrisis                Boolean  @default(false)
+  
+  // JSON Stringified Arrays
+  emotionalTriggers       String // JSON array of strings
+  negativeThoughtPatterns String // JSON array of strings
+  positiveBehaviors       String // JSON array of strings
+  recommendedActions      String // JSON array of strings
+  
+  // Detailed Insights
+  explanation             String
+  confidenceInAnalysis    Int
+  studyAdvice             String
+  breathingExercise       String?
+  motivationMessage       String?
+  tomorrowPrediction      String?
+  reflectionQuestion      String
+}
