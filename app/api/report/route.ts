@@ -29,7 +29,13 @@ export async function GET() {
       averageStress: avgStress.toFixed(1),
       averageConfidence: avgConfidence.toFixed(1),
       averageMotivation: avgMotivation.toFixed(1),
-      recentTriggers: journals.map(j => j.trigger),
+      recentTriggers: journals.flatMap(j => {
+        try {
+          return JSON.parse(j.emotionalTriggers);
+        } catch {
+          return [];
+        }
+      }),
       excerpts: journals.map(j => j.content.substring(0, 50) + "..."),
     });
 

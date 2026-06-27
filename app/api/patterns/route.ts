@@ -13,7 +13,7 @@ export async function GET() {
     }
 
     // Pass the text content of the journals to the AI
-    const patterns = await discoverHiddenPatterns(journals.map(j => j.content));
+    const patterns = await discoverHiddenPatterns(journals.map((j: { content: string }) => j.content));
 
     return NextResponse.json({ patterns });
   } catch (error) {

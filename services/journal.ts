@@ -10,17 +10,22 @@ export async function createJournalEntry(content: string, analysis: JournalAnaly
     data: {
       content,
       primaryEmotion: analysis.primaryEmotion,
+      secondaryEmotion: analysis.secondaryEmotion,
       stressScore: analysis.stressScore,
       confidenceScore: analysis.confidenceScore,
       motivationScore: analysis.motivationScore,
       burnoutRisk: analysis.burnoutRisk,
-      trigger: analysis.trigger,
-      recommendation: analysis.recommendation,
-      cognitiveDistortion: analysis.cognitiveDistortion,
-      studyHours: analysis.studyHours,
-      sleepHours: analysis.sleepHours,
+      emotionalTriggers: JSON.stringify(analysis.emotionalTriggers),
+      negativeThoughtPatterns: JSON.stringify(analysis.negativeThoughtPatterns),
+      positiveBehaviors: JSON.stringify(analysis.positiveBehaviors),
+      recommendedActions: JSON.stringify(analysis.recommendedActions),
+      explanation: analysis.explanation,
+      confidenceInAnalysis: analysis.confidenceInAnalysis,
+      studyAdvice: analysis.studyAdvice,
       breathingExercise: analysis.breathingExercise,
       motivationMessage: analysis.motivationMessage,
+      tomorrowPrediction: analysis.tomorrowPrediction,
+      reflectionQuestion: analysis.reflectionQuestion,
       isCrisis: analysis.isCrisis,
     }
   });
@@ -42,7 +47,7 @@ export async function getJournalsForPatternDiscovery() {
       content: true,
       primaryEmotion: true,
       stressScore: true,
-      trigger: true,
+      emotionalTriggers: true,
     }
   });
 }
