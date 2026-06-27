@@ -14,10 +14,13 @@ export default function DashboardPage() {
   const [analysis, setAnalysis] = useState<JournalAnalysisResult | null>(null);
   const [patterns, setPatterns] = useState<string[]>([]);
   const [reportData, setReportData] = useState<ReportApiResponse | null>(null);
+  const [isLoadingPatterns, setIsLoadingPatterns] = useState(true);
+  const [isLoadingReport, setIsLoadingReport] = useState(true);
 
   /** Fetches discovered patterns from the API. */
   const fetchPatterns = useCallback(async () => {
     try {
+      setIsLoadingPatterns(true);
       const res = await fetch('/api/patterns');
       const data = await res.json();
       if (data.patterns) {
@@ -25,6 +28,8 @@ export default function DashboardPage() {
       }
     } catch (err) {
       console.error('Failed to fetch patterns:', err);
+    } finally {
+      setIsLoadingPatterns(false);
     }
   }, []);
 
@@ -32,6 +37,7 @@ export default function DashboardPage() {
   useEffect(() => {
     async function fetchReport() {
       try {
+        setIsLoadingReport(true);
         const res = await fetch('/api/report');
         const data: ReportApiResponse = await res.json();
         if (!data.error) {
@@ -39,6 +45,8 @@ export default function DashboardPage() {
         }
       } catch (err) {
         console.error('Failed to fetch report:', err);
+      } finally {
+        setIsLoadingReport(false);
       }
     }
     fetchReport();
@@ -83,7 +91,9 @@ export default function DashboardPage() {
 
           {/* Right Column: Historical & Long-Term Feedback */}
           <div className="lg:col-span-5 space-y-8">
-            {patterns.length > 0 ? (
+            {isLoadingPatterns ? (
+              <div className="bg-white/5 border border-white/10 rounded-xl p-6 h-[300px] animate-pulse"></div>
+            ) : patterns.length > 0 ? (
               <div className="animate-in fade-in slide-in-from-bottom-4 duration-700">
                 <PatternCards patterns={patterns} />
               </div>
@@ -97,15 +107,15 @@ export default function DashboardPage() {
 
         {/* Bottom Section: Weekly Wellness Report */}
         <div className="mt-8 w-full">
-          {reportData && reportData.chartData && reportData.chartData.length > 0 && (
+          {isLoadingReport ? (
+            <div className="bg-white/5 border border-white/10 rounded-xl p-6 h-[400px] animate-pulse"></div>
+          ) : reportData && reportData.chartData && reportData.chartData.length > 0 ? (
             <WellnessReport 
               report={reportData.report} 
               stats={reportData.stats} 
               chartData={reportData.chartData} 
             />
-          )}
-          
-          {!reportData?.chartData?.length && (
+          ) : (
             <div className="bg-white/5 border border-white/10 rounded-xl p-6 text-center text-gray-400 backdrop-blur-sm">
               <p>Complete a few journal entries to generate your weekly wellness report.</p>
             </div>
