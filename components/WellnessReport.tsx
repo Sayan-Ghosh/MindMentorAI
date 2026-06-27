@@ -24,23 +24,24 @@ export const WellnessReport = memo(function WellnessReport({ report, stats, char
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <div className="grid grid-cols-3 gap-4 mb-6">
-          <div className="bg-white/5 p-4 rounded-lg text-center">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+          <div className="bg-white/5 p-4 rounded-lg text-center flex flex-col justify-center">
             <p className="text-sm text-gray-400">Avg Stress</p>
             <p className="text-2xl font-bold text-red-400">{stats.avgStress}</p>
           </div>
-          <div className="bg-white/5 p-4 rounded-lg text-center">
+          <div className="bg-white/5 p-4 rounded-lg text-center flex flex-col justify-center">
             <p className="text-sm text-gray-400">Avg Confidence</p>
             <p className="text-2xl font-bold text-blue-400">{stats.avgConfidence}</p>
           </div>
-          <div className="bg-white/5 p-4 rounded-lg text-center">
+          <div className="bg-white/5 p-4 rounded-lg text-center flex flex-col justify-center">
             <p className="text-sm text-gray-400">Avg Motivation</p>
             <p className="text-2xl font-bold text-yellow-400">{stats.avgMotivation}</p>
           </div>
         </div>
 
-        <div className="h-[300px] w-full mb-6">
-          <ResponsiveContainer width="100%" height="100%">
+        <div className="w-full overflow-x-auto mb-6 pb-2">
+          <div className="h-[300px] min-w-[500px] w-full">
+            <ResponsiveContainer width="100%" height="100%">
             <LineChart data={chartData} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
               <CartesianGrid strokeDasharray="3 3" stroke="#ffffff1a" />
               <XAxis dataKey="date" stroke="#9ca3af" />
@@ -54,7 +55,8 @@ export const WellnessReport = memo(function WellnessReport({ report, stats, char
               <Line type="monotone" dataKey="confidence" stroke="#60a5fa" strokeWidth={2} name="Confidence" />
               <Line type="monotone" dataKey="motivation" stroke="#fbbf24" strokeWidth={2} name="Motivation" />
             </LineChart>
-          </ResponsiveContainer>
+            </ResponsiveContainer>
+          </div>
         </div>
 
         {report && (
