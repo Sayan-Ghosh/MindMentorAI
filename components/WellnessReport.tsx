@@ -4,13 +4,15 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
 import type { ChartDataPoint, ReportStats, WeeklyReportResult } from "@/types";
 
+import { memo } from "react";
+
 interface WellnessReportProps {
   report: WeeklyReportResult | null;
   stats: ReportStats;
   chartData: ChartDataPoint[];
 }
 
-export function WellnessReport({ report, stats, chartData }: WellnessReportProps) {
+export const WellnessReport = memo(function WellnessReport({ report, stats, chartData }: WellnessReportProps) {
   if (!chartData || chartData.length === 0) return null;
 
   return (
@@ -63,7 +65,7 @@ export function WellnessReport({ report, stats, chartData }: WellnessReportProps
             </div>
             {report.wins && report.wins.length > 0 && (
               <div>
-                <h4 className="text-sm font-semibold text-green-300 mb-2">This Week's Wins</h4>
+                <h4 className="text-sm font-semibold text-green-300 mb-2">This Week&apos;s Wins</h4>
                 <ul className="list-disc pl-5 text-sm text-gray-300 space-y-1">
                   {report.wins.map((win, i) => (
                     <li key={i}>{win}</li>
@@ -96,4 +98,4 @@ export function WellnessReport({ report, stats, chartData }: WellnessReportProps
       </CardContent>
     </Card>
   );
-}
+});

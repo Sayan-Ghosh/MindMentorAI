@@ -15,7 +15,20 @@ export default function DashboardPage() {
   const [patterns, setPatterns] = useState<string[]>([]);
   const [reportData, setReportData] = useState<ReportApiResponse | null>(null);
 
-  // Fetch report data on mount
+  /** Fetches discovered patterns from the API. */
+  const fetchPatterns = useCallback(async () => {
+    try {
+      const res = await fetch('/api/patterns');
+      const data = await res.json();
+      if (data.patterns) {
+        setPatterns(data.patterns as string[]);
+      }
+    } catch (err) {
+      console.error('Failed to fetch patterns:', err);
+    }
+  }, []);
+
+  // Fetch report data and patterns on mount
   useEffect(() => {
     async function fetchReport() {
       try {
@@ -29,20 +42,8 @@ export default function DashboardPage() {
       }
     }
     fetchReport();
-  }, []);
-
-  /** Fetches discovered patterns from the API. */
-  const fetchPatterns = useCallback(async () => {
-    try {
-      const res = await fetch('/api/patterns');
-      const data = await res.json();
-      if (data.patterns) {
-        setPatterns(data.patterns as string[]);
-      }
-    } catch (err) {
-      console.error('Failed to fetch patterns:', err);
-    }
-  }, []);
+    fetchPatterns();
+  }, [fetchPatterns]);
 
   const handleAnalysisComplete = useCallback((result: JournalAnalysisResult) => {
     setAnalysis(result);
@@ -73,7 +74,7 @@ export default function DashboardPage() {
             
             {analysis && (
               <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
-                <h2 className="text-2xl font-bold mb-4 text-gray-200">Today's Insights</h2>
+                <h2 className="text-2xl font-bold mb-4 text-gray-200">Today&apos;s Insights</h2>
                 <AnalysisCards analysis={analysis} />
                 <WellnessCoach analysis={analysis} />
               </div>

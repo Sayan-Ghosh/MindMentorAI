@@ -29,7 +29,7 @@ export class AIParser {
         reflectionQuestion: raw.reflectionQuestion || "How are you feeling right now?",
         isCrisis: Boolean(raw.isCrisis)
       };
-    } catch (e) {
+    } catch {
       throw new Error("Failed to parse AI JSON response");
     }
   }

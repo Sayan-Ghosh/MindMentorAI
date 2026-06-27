@@ -4,11 +4,13 @@ import { Badge } from "@/components/ui/badge";
 import { JournalAnalysisResult } from "@/types";
 import { Activity, Brain, HeartPulse, Zap } from "lucide-react";
 
+import { memo } from "react";
+
 interface AnalysisCardsProps {
   analysis: JournalAnalysisResult;
 }
 
-export function AnalysisCards({ analysis }: AnalysisCardsProps) {
+export const AnalysisCards = memo(function AnalysisCards({ analysis }: AnalysisCardsProps) {
   const getScoreColor = (score: number) => {
     if (score >= 8) return "bg-green-500";
     if (score >= 5) return "bg-yellow-500";
@@ -74,4 +76,4 @@ export function AnalysisCards({ analysis }: AnalysisCardsProps) {
       </Card>
     </div>
   );
-}
+});

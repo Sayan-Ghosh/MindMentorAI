@@ -38,7 +38,7 @@ describe('AI JSON Parser', () => {
     });
     const parsed = AIParser.parseJournalAnalysis(extraFieldsJson);
     expect(parsed.summary).toBe("Test");
-    expect((parsed as any).randomField).toBeUndefined();
+    expect('randomField' in parsed).toBe(false);
   });
 
   it('should parse JSON wrapped in markdown ticks', () => {

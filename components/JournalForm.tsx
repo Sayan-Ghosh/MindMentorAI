@@ -11,11 +11,13 @@ import { Textarea } from "@/components/ui/textarea";
 import { Loader2 } from "lucide-react";
 import { JournalAnalysisResult } from "@/types";
 
+import { memo } from "react";
+
 interface JournalFormProps {
   onAnalysisComplete: (result: JournalAnalysisResult) => void;
 }
 
-export function JournalForm({ onAnalysisComplete }: JournalFormProps) {
+export const JournalForm = memo(function JournalForm({ onAnalysisComplete }: JournalFormProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -93,4 +95,4 @@ export function JournalForm({ onAnalysisComplete }: JournalFormProps) {
       </CardContent>
     </Card>
   );
-}
+});

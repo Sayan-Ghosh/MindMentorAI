@@ -1,11 +1,13 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Lightbulb } from "lucide-react";
 
+import { memo } from "react";
+
 interface PatternCardsProps {
   patterns: string[];
 }
 
-export function PatternCards({ patterns }: PatternCardsProps) {
+export const PatternCards = memo(function PatternCards({ patterns }: PatternCardsProps) {
   if (!patterns || patterns.length === 0) return null;
 
   return (
@@ -30,4 +32,4 @@ export function PatternCards({ patterns }: PatternCardsProps) {
       </CardContent>
     </Card>
   );
-}
+});

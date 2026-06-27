@@ -40,7 +40,7 @@ export async function analyzeJournalEntry(content: string): Promise<JournalAnaly
   
   try {
     return JSON.parse(text) as JournalAnalysisResult;
-  } catch (error) {
+  } catch {
     console.error("Failed to parse Gemini response", text);
     throw new Error("Failed to parse AI analysis");
   }
@@ -75,7 +75,7 @@ export async function discoverHiddenPatterns(journals: string[]): Promise<string
 
   try {
     return JSON.parse(text) as string[];
-  } catch (error) {
+  } catch {
     console.error("Failed to parse Gemini response", text);
     return [];
   }
@@ -106,7 +106,7 @@ export async function generateWeeklyReport(summaryData: string): Promise<WeeklyR
 
   try {
     return JSON.parse(text) as WeeklyReportResult;
-  } catch (error) {
+  } catch {
     console.error("Failed to parse Gemini response", text);
     throw new Error("Failed to generate report");
   }

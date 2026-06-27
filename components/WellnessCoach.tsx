@@ -2,11 +2,13 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { JournalAnalysisResult } from "@/types";
 import { BrainCircuit, Wind, Sparkles } from "lucide-react";
 
+import { memo } from "react";
+
 interface WellnessCoachProps {
   analysis: JournalAnalysisResult;
 }
 
-export function WellnessCoach({ analysis }: WellnessCoachProps) {
+export const WellnessCoach = memo(function WellnessCoach({ analysis }: WellnessCoachProps) {
   return (
     <Card className="bg-white/5 border-white/10 text-white backdrop-blur-sm mt-6">
       <CardHeader>
@@ -44,10 +46,10 @@ export function WellnessCoach({ analysis }: WellnessCoachProps) {
               <Sparkles className="h-4 w-4 mr-2" />
               Motivation
             </h4>
-            <p className="text-sm italic text-gray-300">"{analysis.motivationMessage}"</p>
+            <p className="text-sm italic text-gray-300">&quot;{analysis.motivationMessage}&quot;</p>
           </div>
         )}
       </CardContent>
     </Card>
   );
-}
+});
