@@ -21,7 +21,11 @@ export function WellnessCoach({ analysis }: WellnessCoachProps) {
             <Sparkles className="h-4 w-4 mr-2" />
             Coaching Recommendation
           </h4>
-          <p className="text-sm text-gray-300 leading-relaxed">{analysis.recommendation}</p>
+          <ul className="list-disc pl-5 text-sm text-gray-300 leading-relaxed space-y-1">
+            {analysis.recommendedActions.map((action, i) => (
+              <li key={i}>{action}</li>
+            ))}
+          </ul>
         </div>
 
         {analysis.breathingExercise && (
