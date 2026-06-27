@@ -13,7 +13,7 @@ export default function Home() {
       <div className="z-10 max-w-4xl space-y-8">
         <div className="inline-flex items-center rounded-full border border-indigo-500/30 bg-indigo-500/10 px-3 py-1 text-sm text-indigo-300 backdrop-blur-md mb-4">
           <Sparkles className="mr-2 h-4 w-4" />
-          <span>Powered by Google Gemini</span>
+          <span>Made by Sayan Ghosh</span>
         </div>
         
         <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight mb-6">
