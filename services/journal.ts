@@ -1,7 +1,11 @@
 import { PrismaClient } from '@prisma/client';
+import { PrismaLibSql } from '@prisma/adapter-libsql';
 import { JournalAnalysisResult } from '@/types';
 
-const prisma = new PrismaClient();
+const adapter = new PrismaLibSql({
+  url: process.env.DATABASE_URL || 'file:./dev.db',
+});
+const prisma = new PrismaClient({ adapter });
 
 export async function createJournalEntry(content: string, analysis: JournalAnalysisResult) {
   return await prisma.journal.create({
