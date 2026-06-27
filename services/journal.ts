@@ -2,7 +2,11 @@ import { PrismaClient } from '@prisma/client';
 import { JournalAnalysisResult } from '@/types';
 
 const prisma = new PrismaClient({
-  datasourceUrl: process.env.DATABASE_URL || "file:./dev.db",
+  datasources: {
+    db: {
+      url: process.env.DATABASE_URL || "file:./dev.db",
+    },
+  },
 });
 
 export async function createJournalEntry(content: string, analysis: JournalAnalysisResult) {
