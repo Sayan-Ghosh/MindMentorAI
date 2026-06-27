@@ -83,27 +83,33 @@ export default function DashboardPage() {
 
           {/* Right Column: Historical & Long-Term Feedback */}
           <div className="lg:col-span-5 space-y-8">
-            {patterns.length > 0 && (
+            {patterns.length > 0 ? (
               <div className="animate-in fade-in slide-in-from-bottom-4 duration-700">
                 <PatternCards patterns={patterns} />
               </div>
-            )}
-
-            {reportData && reportData.chartData && reportData.chartData.length > 0 && (
-              <WellnessReport 
-                report={reportData.report} 
-                stats={reportData.stats} 
-                chartData={reportData.chartData} 
-              />
-            )}
-            
-            {!reportData?.chartData?.length && (
+            ) : (
               <div className="bg-white/5 border border-white/10 rounded-xl p-6 text-center text-gray-400 backdrop-blur-sm">
-                <p>Complete a few journal entries to generate your weekly wellness report and discover hidden patterns.</p>
+                <p>Complete a few journal entries to discover hidden patterns.</p>
               </div>
             )}
           </div>
+        </div>
 
+        {/* Bottom Section: Weekly Wellness Report */}
+        <div className="mt-8 w-full">
+          {reportData && reportData.chartData && reportData.chartData.length > 0 && (
+            <WellnessReport 
+              report={reportData.report} 
+              stats={reportData.stats} 
+              chartData={reportData.chartData} 
+            />
+          )}
+          
+          {!reportData?.chartData?.length && (
+            <div className="bg-white/5 border border-white/10 rounded-xl p-6 text-center text-gray-400 backdrop-blur-sm">
+              <p>Complete a few journal entries to generate your weekly wellness report.</p>
+            </div>
+          )}
         </div>
       </div>
     </div>
