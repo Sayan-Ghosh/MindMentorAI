@@ -19,3 +19,10 @@ export interface JournalAnalysisResult {
   reflectionQuestion: string;
   isCrisis: boolean;
 }
+
+export interface WeeklyReportResult {
+  summary: string;
+  wins: string[];
+  challenges: string[];
+  actionableGoals: string[];
+}
