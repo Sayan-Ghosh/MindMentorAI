@@ -24,9 +24,9 @@ export async function POST(req: Request) {
     const analysis = await analyzeJournalEntry(content);
 
     // Save to database
-    const savedJournal = await createJournalEntry(content, analysis);
+    await createJournalEntry(content, analysis);
 
-    return NextResponse.json(savedJournal);
+    return NextResponse.json(analysis);
   } catch (error) {
     const message = error instanceof Error ? error.message : 'Unknown error';
     console.error('Error processing journal:', message, error);
