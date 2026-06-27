@@ -1,6 +1,13 @@
 import { prisma } from '@/lib/db';
 import { JournalAnalysisResult } from '@/types';
 
+/** Maximum number of journals to retrieve for pattern discovery. */
+const PATTERN_DISCOVERY_LIMIT = 30;
+
+/**
+ * Persists a new journal entry along with its AI-generated analysis to the database.
+ * Array fields (triggers, patterns, behaviors, actions) are serialized as JSON strings.
+ */
 export async function createJournalEntry(content: string, analysis: JournalAnalysisResult) {
   return await prisma.journal.create({
     data: {
@@ -27,6 +34,10 @@ export async function createJournalEntry(content: string, analysis: JournalAnaly
   });
 }
 
+/**
+ * Retrieves the most recent journal entries, ordered by creation date (newest first).
+ * @param limit - Maximum number of journals to return (default: 10).
+ */
 export async function getRecentJournals(limit: number = 10) {
   return await prisma.journal.findMany({
     orderBy: { createdAt: 'desc' },
@@ -34,11 +45,14 @@ export async function getRecentJournals(limit: number = 10) {
   });
 }
 
+/**
+ * Retrieves recent journal entries with a minimal projection for pattern analysis.
+ * Only selects fields needed by the AI pattern discovery service.
+ */
 export async function getJournalsForPatternDiscovery() {
-  // Fetch up to 30 recent journals for pattern analysis
   return await prisma.journal.findMany({
     orderBy: { createdAt: 'desc' },
-    take: 30,
+    take: PATTERN_DISCOVERY_LIMIT,
     select: {
       content: true,
       primaryEmotion: true,

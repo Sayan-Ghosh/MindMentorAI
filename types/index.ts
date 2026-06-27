@@ -26,3 +26,26 @@ export interface WeeklyReportResult {
   challenges: string[];
   actionableGoals: string[];
 }
+
+/** A single data point for the wellness trend chart. */
+export interface ChartDataPoint {
+  date: string;
+  stress: number;
+  confidence: number;
+  motivation: number;
+}
+
+/** Aggregated averages for the wellness report stats panel. */
+export interface ReportStats {
+  avgStress: string;
+  avgConfidence: string;
+  avgMotivation: string;
+}
+
+/** The full shape of the /api/report response payload. */
+export interface ReportApiResponse {
+  report: WeeklyReportResult | null;
+  stats: ReportStats;
+  chartData: ChartDataPoint[];
+  error?: string;
+}

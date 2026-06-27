@@ -1,44 +1,52 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { JournalForm } from "@/components/JournalForm";
 import { AnalysisCards } from "@/components/AnalysisCards";
 import { PatternCards } from "@/components/PatternCards";
 import { WellnessCoach } from "@/components/WellnessCoach";
 import { WellnessReport } from "@/components/WellnessReport";
 import { CrisisAlert } from "@/components/CrisisAlert";
-import { JournalAnalysisResult } from "@/types";
+import { JournalAnalysisResult, ReportApiResponse } from "@/types";
 
 export default function DashboardPage() {
   const [analysis, setAnalysis] = useState<JournalAnalysisResult | null>(null);
   const [patterns, setPatterns] = useState<string[]>([]);
-  const [reportData, setReportData] = useState<any>(null);
+  const [reportData, setReportData] = useState<ReportApiResponse | null>(null);
 
   // Fetch report data on mount
   useEffect(() => {
-    fetch('/api/report')
-      .then(res => res.json())
-      .then(data => {
+    async function fetchReport() {
+      try {
+        const res = await fetch('/api/report');
+        const data: ReportApiResponse = await res.json();
         if (!data.error) {
           setReportData(data);
         }
-      })
-      .catch(console.error);
+      } catch (err) {
+        console.error('Failed to fetch report:', err);
+      }
+    }
+    fetchReport();
   }, []);
 
-  const handleAnalysisComplete = (result: JournalAnalysisResult) => {
+  /** Fetches discovered patterns from the API. */
+  const fetchPatterns = useCallback(async () => {
+    try {
+      const res = await fetch('/api/patterns');
+      const data = await res.json();
+      if (data.patterns) {
+        setPatterns(data.patterns as string[]);
+      }
+    } catch (err) {
+      console.error('Failed to fetch patterns:', err);
+    }
+  }, []);
+
+  const handleAnalysisComplete = useCallback((result: JournalAnalysisResult) => {
     setAnalysis(result);
-    
-    // After a new journal, fetch patterns
-    fetch('/api/patterns')
-      .then(res => res.json())
-      .then(data => {
-        if (data.patterns) {
-          setPatterns(data.patterns);
-        }
-      })
-      .catch(console.error);
-  };
+    fetchPatterns();
+  }, [fetchPatterns]);
 
   return (
     <div className="min-h-screen bg-[#0f172a] text-white p-6 md:p-12 font-sans selection:bg-indigo-500/30">

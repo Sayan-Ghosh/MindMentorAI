@@ -2,18 +2,12 @@
 
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
+import type { ChartDataPoint, ReportStats, WeeklyReportResult } from "@/types";
 
 interface WellnessReportProps {
-  report: {
-    summary: string;
-    recommendedActionPlan: string;
-  } | null;
-  stats: {
-    avgStress: string;
-    avgConfidence: string;
-    avgMotivation: string;
-  };
-  chartData: any[];
+  report: WeeklyReportResult | null;
+  stats: ReportStats;
+  chartData: ChartDataPoint[];
 }
 
 export function WellnessReport({ report, stats, chartData }: WellnessReportProps) {
@@ -67,10 +61,36 @@ export function WellnessReport({ report, stats, chartData }: WellnessReportProps
               <h4 className="text-sm font-semibold text-indigo-300 mb-2">AI Summary</h4>
               <p className="text-sm text-gray-300 leading-relaxed">{report.summary}</p>
             </div>
-            <div>
-              <h4 className="text-sm font-semibold text-teal-300 mb-2">Recommended Action Plan</h4>
-              <p className="text-sm text-gray-300 leading-relaxed">{report.recommendedActionPlan}</p>
-            </div>
+            {report.wins.length > 0 && (
+              <div>
+                <h4 className="text-sm font-semibold text-green-300 mb-2">This Week's Wins</h4>
+                <ul className="list-disc pl-5 text-sm text-gray-300 space-y-1">
+                  {report.wins.map((win, i) => (
+                    <li key={i}>{win}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
+            {report.challenges.length > 0 && (
+              <div>
+                <h4 className="text-sm font-semibold text-amber-300 mb-2">Challenges to Address</h4>
+                <ul className="list-disc pl-5 text-sm text-gray-300 space-y-1">
+                  {report.challenges.map((challenge, i) => (
+                    <li key={i}>{challenge}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
+            {report.actionableGoals.length > 0 && (
+              <div>
+                <h4 className="text-sm font-semibold text-teal-300 mb-2">Actionable Goals for Next Week</h4>
+                <ul className="list-disc pl-5 text-sm text-gray-300 space-y-1">
+                  {report.actionableGoals.map((goal, i) => (
+                    <li key={i}>{goal}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
           </div>
         )}
       </CardContent>
